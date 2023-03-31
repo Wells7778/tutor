@@ -72,7 +72,7 @@ const usersController = {
       if (user.isTeacher) {
         page = 'teacher'
         extra.tutorId = user.Tutor.id
-        extra.tutorDescription = user.Tutor.description
+        extra.tutorIntroduction = user.Tutor.introduction
       } else {
         page = 'profile'
       }

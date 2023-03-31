@@ -17,6 +17,14 @@ const tutorsController = {
     }
     res.render('newTutor', { tutor })
   },
+  async showPage(req, res, next) {
+    try {
+      const tutor = await service.findById(req.params.id)
+      return res.render('tutor', { tutor: tutor.toJSON() })
+    } catch (error) {
+      next(error)
+    }
+  },
   async editPage(req, res, next) {
     try {
       const tutor = await service.findById(req.params.id)
@@ -41,6 +49,7 @@ const tutorsController = {
   },
   async update(req, res, next) {
     try {
+      if(Number(req.params.id) !== helpers.getUser(req).Tutor.id) throw new Error('只能修改自己的課程哦！')
       const tutor = await service.update(req.params.id, req.validBody)
       res.json({ tutor })
     } catch (error) {

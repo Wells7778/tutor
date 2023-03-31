@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Course.init({
     status: DataTypes.INTEGER,
-    start_time: DataTypes.DATE,
+    startTime: DataTypes.DATE,
     score: {
       defaultValue: 0,
       type: DataTypes.DECIMAL(10, 1),

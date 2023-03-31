@@ -1,0 +1,7 @@
+const COURSE_SUBMIT = 0
+const COURSE_COMPLETE = 1
+
+module.exports = {
+  COURSE_SUBMIT,
+  COURSE_COMPLETE
+}

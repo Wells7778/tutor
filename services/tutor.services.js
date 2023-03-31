@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Tutor, User } = db
+const { Tutor, User, Course } = db
 
 
 const index = () => {
@@ -44,7 +44,27 @@ const update = async (id, { introduction, teachingStyle, duration, link, service
 const findById = (id) => {
   return Tutor.findOne({
     where: { id },
-    include: User
+    include: [
+      {
+        model: User,
+        attributes: [
+          'name',
+          'avatar',
+          'description',
+          'score',
+          'tutorCoursesCount',
+          'country',
+        ],
+      },
+      {
+        model: Course,
+        attributes: [
+          'startTime',
+          'score',
+          'comment',
+        ],
+      },
+    ]
   })
 }
 
