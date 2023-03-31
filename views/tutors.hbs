@@ -1,0 +1,194 @@
+<div class="row">
+  <div class="col-9">
+    <div class="container-fluid">
+      <div class="row row-cols-3 g-2">
+        <div class="col-12">
+          <div id="search mb-2">
+            <input type="text" class="form-control" id="search-input" placeholder="Type">
+          </div>
+        </div>
+        {{#each tutors}}
+        <a href="/tutor/{{this.id}}" class="text-reset text-decoration-none">
+          <div class="col">
+            <div class="card mb-3">
+              <img src="{{this.User.avatar}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{this.User.name}}</h5>
+                <p class="card-text text-truncate-4">{{this.introduction}}</p>
+                <p class="card-text"><small class="text-muted">{{this.User.country}}</small></p>
+              </div>
+            </div>
+          </div>
+        </a>
+        {{/each}}
+        <div class="col-12">
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="container-fluid">
+      <div class="row row-cols-1 border">
+        <div class="col">
+          <ul class="nav nav-pills nav-fill justify-content-center g-2 my-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row my-2">
+            <div class="col-4">
+              <img
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                class="circle-img" alt="...">
+            </div>
+            <div class="col-8 justify-content-center align-items-center d-flex">
+              <p class="fs-1 text-center">No X Wells</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

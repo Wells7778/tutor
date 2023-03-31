@@ -1,0 +1,73 @@
+<div class="form-floating mb-2">
+  <textarea class="form-control" id="tutorIntroduction" name="introduction"
+    style="height: 300px;">{{tutor.introduction}}</textarea>
+  <label for="tutorIntroduction">課程介紹</label>
+</div>
+<div class="form-floating mb-2">
+  <textarea class="form-control" id="tutorTeachingStyle" name="teachingStyle"
+    style="height: 300px;">{{tutor.teachingStyle}}</textarea>
+  <label for="tutorTeachingStyle">教學方式</label>
+</div>
+<div class="form-floating mb-2">
+  <input type="number" class="form-control" id="tutorDuration" name="duration" value="{{tutor.duration}}" step="10"
+    min="30">
+  <label for="tutorDuration">課程時間(分鐘)</label>
+</div>
+<div class="form-floating mb-2">
+  <input type="textarea" class="form-control" id="tutorLink" name="link" value="{{tutor.link}}">
+  <label for="tutorLink">課程連結</label>
+</div>
+<div class="form-group mb-4">
+  <p>開放預約時間</p>
+  <div class="row row-cols-7 g-2">
+    <div class="col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="0" id="sunday" name="serviceAvailability" {{#ifIncludes
+          tutor.serviceAvailability 0}} checked {{/ifIncludes}}>
+        <label for="sunday" class="form-check-label">週日</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="1" id="monday" name="serviceAvailability" {{#ifIncludes
+          tutor.serviceAvailability 1}} checked {{/ifIncludes}}>
+        <label for="monday" class="form-check-label">週一</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="2" id="tuesday" name="serviceAvailability" {{#ifIncludes
+          tutor.serviceAvailability 2}} checked {{/ifIncludes}}>
+        <label for="tuesday" class="form-check-label">週二</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="3" id="wednesday" name="serviceAvailability"
+          {{#ifIncludes tutor.serviceAvailability 3}} checked {{/ifIncludes}}>
+        <label for="wednesday" class="form-check-label">週三</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="4" id="thursday" name="serviceAvailability" {{#ifIncludes
+          tutor.serviceAvailability 4}} checked {{/ifIncludes}}>
+        <label for="thursday" class="form-check-label">週四</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="5" id="friday" name="serviceAvailability" {{#ifIncludes
+          tutor.serviceAvailability 5}} checked {{/ifIncludes}}>
+        <label for="friday" class="form-check-label">週五</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="6" id="saturday" name="serviceAvailability" {{#ifIncludes
+          tutor.serviceAvailability 6}} checked {{/ifIncludes}}>
+        <label for="saturday" class="form-check-label">週六</label>
+      </div>
+    </div>
+  </div>
+</div>

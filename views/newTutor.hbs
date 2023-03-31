@@ -1,0 +1,12 @@
+<div class="row justify-content-center">
+  <div class="col col-8 border border-5 pt-5">
+    <div class="mb-4 text-center">
+      <h1 class="h3 font-weight-normal mb-3">成為老師</h1>
+    </div>
+    <form class="py-3" action="/tutors" method="POST">
+      <h1 class="h3 mb-3 fw-normal">請填寫課程內容</h1>
+      {{>tutorForm tutor=tutor}}
+      <button class="w-100 btn btn-lg btn-primary" type="submit">送出</button>
+    </form>
+  </div>
+</div>

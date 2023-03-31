@@ -1,0 +1,21 @@
+.circle-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  line-height: 100px;
+}
+
+.text-truncate-4 {
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}

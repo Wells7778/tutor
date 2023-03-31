@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 border border-5 pt-5">
+    <div class="mb-4 text-center">
+      <h1 class="h3 font-weight-normal mb-3">Sign In</h1>
+    </div>
+    <form action="/signin" method="POST">
+      <div class="form-row form-floating mb-3">
+        <input type="email" class="form-control" id="email" name="email" required>
+        <label for="email">Email address</label>
+      </div>
+      <div class="form-row form-floating mb-3">
+        <input type="password" class="form-control" id="password" name="password" required>
+        <label for="password">Password</label>
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    </form>
+    <div class="my-4 text-center">
+      <p>Or</p>
+      <p><a href="{{googleAuthUrl}}">Sign In with Google</a></p>
+    </div>
+  </div>
+</div>
