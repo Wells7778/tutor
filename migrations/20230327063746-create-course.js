@@ -18,6 +18,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       status: {
+        defaultValue: 0,
         type: Sequelize.INTEGER,
       },
       start_time: {

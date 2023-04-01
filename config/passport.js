@@ -63,10 +63,9 @@ passport.deserializeUser((id, done) => {
     include: [
       {
         model: Tutor,
-        include: [Course],
       },
       {
-        model: Course
+        model: Course,
       }
     ],
   }).then(user => {

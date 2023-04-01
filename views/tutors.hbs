@@ -47,144 +47,50 @@
     <div class="container-fluid">
       <div class="row row-cols-1 border">
         <div class="col">
-          <ul class="nav nav-pills nav-fill justify-content-center g-2 my-3">
+          <ul class="nav nav-tabs nav-fill justify-content-center g-2 my-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Active</a>
+              <button class="nav-link active" id="rank-week-tab" data-bs-toggle="tab" data-bs-target="#rank-week"
+                type="button" role="tab" aria-controls="rank-week" aria-selected="true">本周排行</button>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <button class="nav-link" id="rank-tab" data-bs-toggle="tab" data-bs-target="#rank" type="button"
+                role="tab" aria-controls="rank" aria-selected="false">總排行</button>
             </li>
           </ul>
         </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
+        <div class="col tab-content">
+          <div class="tab-pane fade show active" id="rank-week" role="tabpanel" aria-labelledby="rank-week-tab"
+            tabindex="0">
+            {{#each rankStudentsByWeek}}
+            <div class="col">
+              <div class="row my-2">
+                <div class="col-2">
+                  <img src="{{this.avatar}}" class="circle-img-1" alt="...">
+                </div>
+                <div class="col-10 justify-content-center align-items-center d-flex">
+                  <p class="fs-5 text-center">No.{{this.rank}}</p>
+                  <p class="fs-5 text-center">{{this.name}}
+                    <small>{{this.minutes}}min.</small>
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
+            {{/each}}
           </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row my-2">
-            <div class="col-4">
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                class="circle-img" alt="...">
-            </div>
-            <div class="col-8 justify-content-center align-items-center d-flex">
-              <p class="fs-1 text-center">No X Wells</p>
+          <div class="tab-pane fade" id="rank" role="tabpanel" aria-labelledby="rank-tab" tabindex="1">
+            <div class="container-fluid">
+              {{#each rankStudents}}
+              <div class="d-flex justify-content-between my-2">
+                <div class="mr-2">
+                  <img src="{{this.avatar}}" class="circle-img" alt="...">
+                </div>
+                <div class="m-3">
+                  <div class="fs-5 text-center">No.{{this.rank}}</div>
+                  <div class="fs-5 text-center">{{this.name}}</div>
+                  <div class="fs-5 text-center">{{this.minutes}}min.</div>
+                </div>
+              </div>
+              {{/each}}
             </div>
           </div>
         </div>

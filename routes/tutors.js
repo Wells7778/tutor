@@ -7,7 +7,7 @@ const schemas = require('../validations/tutors.validation.js')
 
 router.get('/', tutorsController.indexPage)
 router.get('/new', authenticatedStudent, tutorsController.newPage)
-router.get('/:id', tutorsController.showPage)
+router.get('/:id', authenticatedStudent, tutorsController.showPage)
 router.get('/:id/edit', authenticatedTeacher, tutorsController.editPage)
 router.post('/', authenticatedStudent, bodyValidation(schemas.create), tutorsController.create)
 router.put('/:id', authenticatedTeacher, bodyValidation(schemas.create), tutorsController.update)

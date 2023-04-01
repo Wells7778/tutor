@@ -3,6 +3,9 @@ const db = require('../models')
 const helpers = require('../helpers/auth.helper')
 const { User } = db
 const qs = require('querystring')
+const courseService = require('../services/course.services')
+const format = require('date-fns/format')
+const { COURSE_SUBMIT, COURSE_COMPLETE, COURSE_ATTEND } = require('../constants/course.status')
 const generateGoogleAuthUrl = (req) => {
   const redirectUrl = req.query.redirectUrl
   let googleAuthUrl = '/auth/google'
@@ -73,6 +76,17 @@ const usersController = {
         page = 'teacher'
         extra.tutorId = user.Tutor.id
         extra.tutorIntroduction = user.Tutor.introduction
+        const courses = await courseService.findAllByTutor(user.Tutor) || []
+        const formatCourse = (course) => ({
+          id: course.id,
+          startTime: format(course.startTime, 'yyyy-MM-dd HH::mm'),
+          comment: course.comment || '',
+          userName: course.User.name,
+          userAvatar: course.User.avatar,
+        })
+        extra.newCourse = courses.filter(course => course.status === COURSE_SUBMIT).map(course => formatCourse(course))
+        extra.attendCourse = courses.filter(course => course.status === COURSE_ATTEND).map(course => formatCourse(course))
+        extra.completeCourse = courses.filter(course => course.status === COURSE_COMPLETE).map(course => formatCourse(course))
       } else {
         page = 'profile'
       }

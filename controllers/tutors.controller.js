@@ -1,11 +1,30 @@
 const service = require('../services/tutor.services')
 const userService = require('../services/user.services')
+const courseService = require('../services/course.services')
 const helpers = require('../helpers/auth.helper')
 const tutorsController = {
   async indexPage(req, res, next) {
     try {
       const tutors = await service.index()
-      return res.render('tutors', { tutors })
+      const rankStudents = await userService.rankStudents()
+      const rankStudentsByWeek = await userService.rankStudentsByWeek()
+      const rankStudentsData = rankStudents.map((student, index) => {
+        return {
+          rank: index + 1,
+          name: student.name,
+          avatar: student.avatar,
+          minutes: student.totalMinutes,
+        }
+      })
+      const rankStudentsByWeekData = rankStudentsByWeek.map((record, index) => {
+        return {
+          rank: index + 1,
+          name: record.User.name,
+          avatar: record.User.avatar,
+          minutes: record.learnedMinutes,
+        }
+      })
+      return res.render('tutors', { tutors, rankStudents: rankStudentsData, rankStudentsByWeek: rankStudentsByWeekData })
     } catch (error) {
       next(error)
     }
@@ -20,7 +39,8 @@ const tutorsController = {
   async showPage(req, res, next) {
     try {
       const tutor = await service.findById(req.params.id)
-      return res.render('tutor', { tutor: tutor.toJSON() })
+      const courseOptions = courseService.getAvailTimes(tutor)
+      return res.render('tutor', { tutor: tutor.toJSON(), courseOptions })
     } catch (error) {
       next(error)
     }
@@ -49,7 +69,7 @@ const tutorsController = {
   },
   async update(req, res, next) {
     try {
-      if(Number(req.params.id) !== helpers.getUser(req).Tutor.id) throw new Error('只能修改自己的課程哦！')
+      if (Number(req.params.id) !== helpers.getUser(req).Tutor.id) throw new Error('只能修改自己的課程哦！')
       const tutor = await service.update(req.params.id, req.validBody)
       res.json({ tutor })
     } catch (error) {
