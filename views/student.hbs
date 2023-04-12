@@ -6,13 +6,13 @@
           <div class="col align-items-center">
             <div class="card border border-0">
               <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                src="{{user.avatar}}"
                 class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title fs-1 my-3">Wells</h5>
-                <p class="card-text my-3">United Kingdom</p>
+                <h5 class="card-title fs-1 my-3">{{user.name}}</h5>
+                <p class="card-text my-3">{{user.country}}</p>
                 <p class="card-text fs-5 fw-bold my-3">About Me</p>
-                <p class="card-text my-3">Big company announcement or simple sub-header taking two or more lines.</p>
+                <p class="card-text my-3">{{user.description}}</p>
               </div>
             </div>
           </div>

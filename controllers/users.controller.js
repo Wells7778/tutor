@@ -88,7 +88,7 @@ const usersController = {
         extra.attendCourse = courses.filter(course => course.status === COURSE_ATTEND).map(course => formatCourse(course))
         extra.completeCourse = courses.filter(course => course.status === COURSE_COMPLETE).map(course => formatCourse(course))
       } else {
-        page = 'profile'
+        page = 'student'
       }
       res.render(page, { extra })
     } catch (error) {
