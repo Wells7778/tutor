@@ -5,9 +5,13 @@
   object-fit: cover;
 }
 
-.circle-img-1 {
-  width: 50;
-  height: 50;
+.circle-img-100 {
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.circle-img-2 {
   border-radius: 50%;
   object-fit: cover;
 }

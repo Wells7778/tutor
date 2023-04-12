@@ -62,15 +62,18 @@
           <div class="tab-pane fade show active" id="rank-week" role="tabpanel" aria-labelledby="rank-week-tab"
             tabindex="0">
             {{#each rankStudentsByWeek}}
-            <div class="col">
-              <div class="row my-2">
-                <div class="col-2">
-                  <img src="{{this.avatar}}" class="circle-img-1" alt="...">
-                </div>
-                <div class="col-10 justify-content-center align-items-center d-flex">
-                  <p class="fs-5 text-center">No.{{this.rank}}</p>
-                  <p class="fs-5 text-center">{{this.name}}
-                    <small>{{this.minutes}}min.</small>
+            <div class="row mb-2">
+              <div class="col-4 align-items-center">
+                <img src="{{this.avatar}}" class="circle-img-100" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="d-flex align-items-center justify-content-between h-100">
+                  <p class="fs-5">No.{{this.rank}} </p>
+                  <p class="fw-bold">{{this.name}}</p>
+                  <p class="fs-10">
+                    <small>
+                      {{this.minutes}} min.
+                    </small>
                   </p>
                 </div>
               </div>
@@ -78,20 +81,24 @@
             {{/each}}
           </div>
           <div class="tab-pane fade" id="rank" role="tabpanel" aria-labelledby="rank-tab" tabindex="1">
-            <div class="container-fluid">
-              {{#each rankStudents}}
-              <div class="d-flex justify-content-between my-2">
-                <div class="mr-2">
-                  <img src="{{this.avatar}}" class="circle-img" alt="...">
-                </div>
-                <div class="m-3">
-                  <div class="fs-5 text-center">No.{{this.rank}}</div>
-                  <div class="fs-5 text-center">{{this.name}}</div>
-                  <div class="fs-5 text-center">{{this.minutes}}min.</div>
+            {{#each rankStudents}}
+            <div class="row mb-2">
+              <div class="col-4 align-items-center">
+                <img src="{{this.avatar}}" class="circle-img-100" alt="...">
+              </div>
+              <div class="col-8">
+                <div class="d-flex align-items-center justify-content-between h-100">
+                  <p class="fs-5">No.{{this.rank}} </p>
+                  <p class="fw-bold">{{this.name}}</p>
+                  <p class="fs-10">
+                    <small>
+                      {{this.minutes}} min.
+                    </small>
+                  </p>
                 </div>
               </div>
-              {{/each}}
             </div>
+            {{/each}}
           </div>
         </div>
       </div>
