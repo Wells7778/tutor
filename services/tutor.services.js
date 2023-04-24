@@ -1,12 +1,15 @@
 const db = require('../models')
 const { Tutor, User, Course } = db
+const PaginationService = require('./pagination.service')
 
 
-const index = () => {
-  return Tutor.findAll({
+const index = ({ page = 1, limit = 6, search }) => {
+  const paginationService = new PaginationService(Tutor)
+  const condition = {
     attributes: [
       'id',
-      'introduction'
+      'introduction',
+      'teachingStyle',
     ],
     include: [
       {
@@ -14,13 +17,30 @@ const index = () => {
         attributes: [
           'name',
           'avatar',
-          'country'
+          'country',
+          'score',
         ]
       }
     ],
     raw: true,
     nest: true
-  })
+  }
+  if (search) {
+    // search by user name and tutor introduction
+    condition['where'] = {
+      '$User.name$': {
+        [db.Sequelize.Op.like]: `%${search}%`
+      },
+      '$introduction$': {
+        [db.Sequelize.Op.like]: `%${search}%`
+      }
+    }
+  }
+  // order by user score
+  const order = [
+    [db.Sequelize.literal('User.score'), 'DESC']
+  ]
+  return paginationService.getPaginatedData({ page, limit, order, condition })
 }
 const create = (user, params) => {
   return Tutor.create({
@@ -48,6 +68,7 @@ const findById = (id) => {
       {
         model: User,
         attributes: [
+          'email',
           'name',
           'avatar',
           'description',

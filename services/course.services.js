@@ -6,8 +6,10 @@ const isEqual = require('date-fns/isEqual')
 const eachMinuteOfInterval = require('date-fns/eachMinuteOfInterval')
 const getDay = require('date-fns/getDay')
 const getWeek = require('date-fns/getWeek')
-const { COURSE_SUBMIT, COURSE_ATTEND, COURSE_COMPLETE } = require('../constants/course.status')
+const isAfter = require('date-fns/isAfter')
+const { COURSE_SUBMIT, COURSE_COMPLETE } = require('../constants/course.status')
 const { Course, User, Tutor, Record, sequelize } = db
+const { Op } = require('sequelize')
 
 const _durationToInterval = (duration) => {
   const STEP = 30
@@ -38,7 +40,7 @@ const getAvailTimes = (tutor) => {
   const existLessons = tutor.Courses.map(course => course.startTime)
   const step = _durationToInterval(duration)
   const start = startOfTomorrow()
-  const end = addWeeks(start, 2)
+  const end = addWeeks(start, 3)
   const availTimes = eachMinuteOfInterval({ start, end }, { step })
   return availTimes.filter((time) => {
     const weekday = getDay(time)
@@ -49,13 +51,89 @@ const getAvailTimes = (tutor) => {
   }).map(time => format(time, 'yyyy-MM-dd HH:mm'))
 }
 
-const findAllByTutor = (tutor) => {
+const checkCourses = async () => {
+  const courses = await Course.findAll({
+    attributes: [
+      'id',
+      'status',
+      'startTime'
+    ],
+    where: {
+      startTime: {
+        [Op.lte]: new Date(),
+      },
+      status: {
+        [Op.lt]: COURSE_COMPLETE,
+      },
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['id'],
+      },
+      {
+        model: Tutor,
+        attributes: ['duration'],
+      },
+    ]
+  })
+  return Promise.all(
+    courses
+      .map(course => checkOut(course))
+      .filter(Boolean)
+  )
+}
+
+const checkOut = (course) => {
+  if (isAfter(course.startTime, new Date())) return
+
+  course.status = COURSE_COMPLETE
+  return attend(course)
+}
+
+const findAllByStudent = async (student) => {
+  await checkCourses()
   return Course.findAll({
     attributes: [
       'id',
       'status',
       'startTime',
       'comment',
+    ],
+    where: {
+      UserId: student.id,
+      comment: {
+        [Op.is]: null,
+      }
+    },
+    include: [
+      {
+        model: Tutor,
+        attributes: [
+          'link',
+          [
+            sequelize.literal(`(
+              SELECT Users.name
+              FROM Users
+              WHERE Users.id = Tutor.user_id
+            )`),
+            'teacherName',
+          ]
+        ]
+      },
+    ],
+  })
+}
+
+const findAllByTutor = async (tutor) => {
+  await checkCourses()
+  return Course.findAll({
+    attributes: [
+      'id',
+      'status',
+      'startTime',
+      'comment',
+      'score',
     ],
     where: {
       TutorId: tutor.id,
@@ -106,7 +184,7 @@ const attend = async (course) => {
       }
     })
     weekRecord.learnedMinutes += duration
-    course.status = COURSE_ATTEND
+    course.status = COURSE_COMPLETE
     await student.save({ transaction: t })
     await weekRecord.save({ transaction: t })
     await course.save({ transaction: t })
@@ -143,6 +221,7 @@ module.exports = {
   create,
   getAvailTimes,
   findAllByTutor,
+  findAllByStudent,
   findById,
   attend,
   complete,

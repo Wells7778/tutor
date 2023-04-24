@@ -5,7 +5,9 @@ const helpers = require('../helpers/auth.helper')
 const tutorsController = {
   async indexPage(req, res, next) {
     try {
-      const tutors = await service.index()
+      const query = req.query
+      const { page = 1, perPage = 6, search = '' } = query
+      const { data: tutors, pagination } = await service.index({ page, limit: perPage, search })
       const rankStudents = await userService.rankStudents()
       const rankStudentsByWeek = await userService.rankStudentsByWeek()
       const rankStudentsData = rankStudents.map((student, index) => {
@@ -24,7 +26,15 @@ const tutorsController = {
           minutes: record.learnedMinutes,
         }
       })
-      return res.render('tutors', { tutors, rankStudents: rankStudentsData, rankStudentsByWeek: rankStudentsByWeekData })
+      return res.render('tutors', {
+        pagination,
+        tutors,
+        page,
+        perPage,
+        search,
+        rankStudents: rankStudentsData,
+        rankStudentsByWeek: rankStudentsByWeekData,
+      })
     } catch (error) {
       next(error)
     }
@@ -40,7 +50,9 @@ const tutorsController = {
     try {
       const tutor = await service.findById(req.params.id)
       const courseOptions = courseService.getAvailTimes(tutor)
-      return res.render('tutor', { tutor: tutor.toJSON(), courseOptions })
+      const courses = tutor.Courses.sort((a, b) => a.score - b.score)
+      const filterCourses = [...courses.slice(0, 2), ...courses.slice(-2)].map(c => c.toJSON())
+      return res.render('tutor', { tutor: tutor.toJSON(), courseOptions, filterCourses })
     } catch (error) {
       next(error)
     }

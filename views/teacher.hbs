@@ -61,7 +61,7 @@
             <div class="card-body">
               <h5 class="card-title fw-bold">New Schedule</h5>
               <div class="row row-cols-2 g-1">
-                {{#each extra.newCourse}}
+                {{#each extra.newCourses}}
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
@@ -69,11 +69,6 @@
                         <div class="col-8">
                           <p class="card-text">Time: {{this.startTime}}</p>
                           <p class="card-text">Student Name: {{this.userName}}</p>
-                        </div>
-                        <div class="col-4">
-                          <form action="/courses/{{this.id}}?_method=PUT" method="POST">
-                            <button type="submit" class="btn btn-warning">complete</button>
-                          </form>
                         </div>
                       </div>
                     </div>
@@ -88,20 +83,20 @@
           <div class="card border border-0">
             <div class="card-body">
               <h5 class="card-title fw-bold">Lesson History</h5>
-              <div class="row row-cols-2 g-1">
-                {{#each extra.completeCourse}}
+              <div class="row row-cols-1 g-1">
+                {{#each extra.completeCourses}}
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
+                      <div class="card-title">
+                        <h5 class="card-text">
+                          <span class="badge bg-warning me-2">{{this.score}}</span>
+                          {{this.userName}}
+                        </h5>
+                      </div>
                       <div class="row">
-                        <div class="col-8">
-                          <p class="card-text">Time: {{this.startTime}}</p>
-                          <p class="card-text">Student Name: {{this.userName}}</p>
-                        </div>
-                        <div class="col-4">
-                          <form action="/courses/{{this.id}}?_method=PUT" method="POST">
-                            <button type="submit" class="btn btn-warning">complete</button>
-                          </form>
+                        <div class="col-12">
+                          <p class="card-text">{{this.comment}}</p>
                         </div>
                       </div>
                     </div>

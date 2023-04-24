@@ -27,7 +27,7 @@
                     <path fill-rule="evenodd"
                       d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                   </svg>
-                  {{tutor.User.score}}
+                  {{tutor.User.score}}{{tutor.User.email}}
                 </p>
               </div>
             </div>
@@ -35,13 +35,20 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row row-cols-1">
       <div class="col pt-5">
         <h5 class="my-3 fs-3 fw-bold">Introduction</h5>
         <p>{{tutor.introduction}}</p>
         <h5 class="my-3 fs-3 fw-bold">Teaching Style</h5>
         <p>{{tutor.teachingStyle}}</p>
       </div>
+      <div class="col">
+        <h5 class="my-3 fs-3 fw-bold">Lesson History</h5>
+        {{#each filterCourses}}
+        <div class="fs5"><span class="badge bg-warning me-2">{{this.score}}</span>{{this.comment}}</div>
+        {{/each}}
+      </div>
+
     </div>
   </div>
   <div class="col-4">
