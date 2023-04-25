@@ -4,6 +4,7 @@ const helpers = require('../helpers/auth.helper')
 const { User } = db
 const qs = require('querystring')
 const courseService = require('../services/course.services')
+const userService = require('../services/user.services')
 const format = require('date-fns/format')
 const { COURSE_SUBMIT, COURSE_COMPLETE } = require('../constants/course.status')
 const getWeek = require('date-fns/getWeek')
@@ -97,10 +98,13 @@ const usersController = {
       } else {
         page = 'student'
         const courses = await courseService.findAllByStudent(user) || []
+        const weekRank = await userService.getRankByWeek(user.id)
+        const rank = await userService.getRank(user.id)
         const formatCourse = (course) => ({
           id: course.id,
           startTime: format(course.startTime, 'yyyy-MM-dd HH::mm'),
           teacherName: course.Tutor.dataValues.teacherName,
+          teacherAvatar: course.Tutor.dataValues.teacherAvatar,
           link: course.Tutor.link,
         })
         extra.newCourses = courses
@@ -109,6 +113,8 @@ const usersController = {
         extra.completeCourses = courses
           .filter(course => course.status === COURSE_COMPLETE)
           .map(course => formatCourse(course))
+        extra.weekRank = weekRank
+        extra.rank = rank
       }
       res.render(page, { extra })
     } catch (error) {

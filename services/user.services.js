@@ -1,5 +1,6 @@
 const db = require('../models')
-const { User, Record, Course, Tutor, sequelize } = db
+const { User, Record, Course, Tutor, sequelize, Sequelize } = db
+const { Op } = Sequelize
 const getWeek = require('date-fns/getWeek')
 
 const changeRole = (user, { role }) => {
@@ -103,12 +104,55 @@ const calculateTutorAvgScores = async (id) => {
   await user.save()
 }
 
+const getRank = async (id) => {
+  const user = await User.findOne({
+    where: { id },
+    attributes: [
+      'totalMinutes',
+    ],
+  })
+  const rank = await User.count({
+    where: {
+      totalMinutes: {
+        [Op.gt]: user.totalMinutes
+      }
+    }
+  })
+  return rank + 1
+}
 
+const getRankByWeek = async (id) => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const week = getWeek(now)
+  const userMinutes = await Record.findOne({
+    where: {
+      user_id: id,
+      year,
+      week
+    },
+    attributes: [
+      'learnedMinutes',
+    ],
+  })
+
+  const rank = await Record.count({
+    where: {
+      learnedMinutes: {
+        [Op.gt]: userMinutes.learnedMinutes
+      }
+    }
+  })
+
+  return rank + 1
+}
 
 module.exports = {
   changeRole,
   rankStudents,
   rankStudentsByWeek,
   calculateRank,
-  calculateTutorAvgScores
+  calculateTutorAvgScores,
+  getRank,
+  getRankByWeek,
 }

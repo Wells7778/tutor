@@ -9,8 +9,11 @@ const {
 } = require('@ngneat/falso')
 const { User, Tutor, Course } = require('../models')
 const getWeek = require('date-fns/getWeek')
+const isAfter = require('date-fns/isAfter')
+const startOfTomorrow = require('date-fns/startOfTomorrow')
+const subWeeks = require('date-fns/subWeeks')
 const { getAvailTimes } = require('../services/course.services')
-const { COURSE_COMPLETE } = require('../constants/course.status')
+const { COURSE_SUBMIT, COURSE_COMPLETE } = require('../constants/course.status')
 const { calculateRank, calculateTutorAvgScores } = require('../services/user.services')
 
 /** @type {import('sequelize-cli').Migration} */
@@ -40,7 +43,7 @@ module.exports = {
     const records = {}
     for(let i in tutors) {
       const tutor = tutors[i]
-      const times = await getAvailTimes(tutor)
+      const times = await getAvailTimes(tutor, { startTime: subWeeks(startOfTomorrow(), 1) })
       times.forEach(time => {
         const startTime = new Date(time)
         const year = startTime.getFullYear()
@@ -48,26 +51,31 @@ module.exports = {
         const item = {
           user_id: users[randNumber({ min: 0, max: users.length - 1 })].id,
           tutor_id: tutor.id,
-          status: COURSE_COMPLETE,
+          status: COURSE_SUBMIT,
           start_time: startTime,
-          score: randNumber({ min: 1, max: 5, fraction: 1 }),
-          comment: randText({ charCount: 100 }),
           created_at: new Date(),
           updated_at: new Date(),
         }
-        courses.push(item)
-        const key = [item.user_id, year, week].join('#')
-        if (!Object.prototype.hasOwnProperty.call(records, key)) {
-          records[key] = {
-            user_id: item.user_id,
-            year,
-            week,
-            learned_minutes: 0,
-            created_at: new Date(),
-            updated_at: new Date(),
-          }
+        if (isAfter(startTime, new Date()) && (randNumber({ min: 0, max: 10 }) >= 5)) {
+          item.status = COURSE_COMPLETE
+          item.score = randNumber({ min: 1, max: 5, fraction: 1 })
+          item.comment = randText({ charCount: 100 })
         }
-        records[key].learned_minutes += tutor.duration
+        courses.push(item)
+        if (item.status === COURSE_COMPLETE) {
+          const key = [item.user_id, year, week].join('#')
+          if (!Object.prototype.hasOwnProperty.call(records, key)) {
+            records[key] = {
+              user_id: item.user_id,
+              year,
+              week,
+              learned_minutes: 0,
+              created_at: new Date(),
+              updated_at: new Date(),
+            }
+          }
+          records[key].learned_minutes += tutor.duration
+        }
       })
     }
     await queryInterface.bulkInsert('Courses', courses)
@@ -83,11 +91,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('Courses', {})
+    await queryInterface.bulkDelete('Records', {})
   }
 }

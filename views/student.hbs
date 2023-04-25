@@ -7,6 +7,24 @@
             <div class="card border border-0">
               <img src="{{user.avatar}}" class="card-img-top" alt="...">
               <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="d-flex justify-content-center mb-3">
+                      <div class="circle bg-secondary fs-1 text-center">{{extra.weekRank}}</div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <div class="fs-5 fw-bold">Weekly Ranking</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="d-flex justify-content-center mb-3">
+                      <div class="circle bg-secondary fs-1 text-center">{{extra.rank}}</div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <div class="fs-5 fw-bold">Overall Ranking</div>
+                    </div>
+                  </div>
+                </div>
                 <h5 class="card-title fs-1 my-3">{{user.name}}</h5>
                 <p class="card-text my-3">{{user.country}}</p>
                 <p class="card-text fs-5 fw-bold my-3">About Me</p>
@@ -29,9 +47,13 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="row">
+                        <div class="col-4">
+                          <img src="{{this.teacherAvatar}}" class="circle-img-100" alt="...">
+                        </div>
                         <div class="col-8">
                           <p class="card-text">Time: {{this.startTime}}</p>
                           <p class="card-text">Teacher Name: {{this.teacherName}}</p>
+                          <p class="card-text">Link: {{this.link}}</p>
                         </div>
                       </div>
                     </div>
@@ -46,19 +68,20 @@
           <div class="card border border-0">
             <div class="card-body">
               <h5 class="card-title fw-bold">Lesson History</h5>
-              <div class="row row-cols-1 g-1">
+              <div class="row row-cols-2 g-1">
                 {{#each extra.completeCourses}}
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
-                      <div class="card-title">
-                        <h5 class="card-text">
-                          {{this.startTime}}
-                        </h5>
-                      </div>
                       <div class="row">
-                        <div class="col-12">
+                        <div class="col-4">
+                          <img src="{{this.teacherAvatar}}" class="circle-img-100" alt="...">
+                        </div>
+                        <div class="col-5 offset-3">
                           <p class="card-text">{{this.teacherName}}</p>
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scoreModal" data-bs-course-id="{{this.id}}">
+                            Score
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -69,25 +92,73 @@
             </div>
           </div>
         </div>
-        <div class="row row-cols-2 g-5 mt-5">
-          <div class="col">
-            <div class="d-flex justify-content-center mb-3">
-              <div class="circle bg-secondary fs-1 text-center">1</div>
-            </div>
-            <div class="d-flex justify-content-center">
-              <div class="fs-5 fw-bold">Weekly Ranking</div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="d-flex justify-content-center mb-3">
-              <div class="circle bg-secondary fs-1 text-center">1</div>
-            </div>
-            <div class="d-flex justify-content-center">
-              <div class="fs-5 fw-bold">Overall Ranking</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="scoreModal" tabindex="-1" aria-labelledby="scoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="scoreModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+          <div class="mb-3">
+            <label for="score" class="form-label">Score</label>
+            <input type="number" class="form-control" id="score" name="score" min="0" max="5">
+          </div>
+          <div class="mb-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const scoreModel = document.querySelector('#scoreModal')
+  const submit = scoreModel.querySelector('.modal-footer button[type=submit]')
+  submit.addEventListener('click', (event) => {
+    event.preventDefault()
+    const form = scoreModel.querySelector('form')
+    const formData = new FormData(form)
+    const url = form.getAttribute('action')
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (result.ok) {
+          alert('打分數成功！')
+          scoreModel.querySelector('.btn-close').click()
+        } else {
+          alert(result.message)
+        }
+      })
+  })
+  const setModelData = (event) => {
+    const btn = event.relatedTarget
+    const id = btn.getAttribute('data-bs-course-id')
+    const teacherName = btn.parentElement.querySelector('p').textContent
+    scoreModel.querySelector('.modal-title').textContent = `幫 ${teacherName} 打分數吧！`
+    // set form action
+    scoreModel.querySelector('form').setAttribute('action', `/api/courses/${id}/score`)
+  }
+  const clearModelData = () => {
+    scoreModel.querySelector('.modal-title').textContent = ''
+  }
+
+  scoreModel.addEventListener('show.bs.modal', setModelData)
+  scoreModel.addEventListener('hidden.bs.modal', clearModelData)
+</script>

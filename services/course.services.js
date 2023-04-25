@@ -35,12 +35,12 @@ const create = async (user, tutor, { startTime }) => {
   })
 }
 
-const getAvailTimes = (tutor) => {
+const getAvailTimes = (tutor, { startTime = startOfTomorrow() }) => {
   const { duration, serviceAvailability } = tutor
   const existLessons = tutor.Courses.map(course => course.startTime)
   const step = _durationToInterval(duration)
-  const start = startOfTomorrow()
-  const end = addWeeks(start, 3)
+  const start = startTime
+  const end = addWeeks(start, 2)
   const availTimes = eachMinuteOfInterval({ start, end }, { step })
   return availTimes.filter((time) => {
     const weekday = getDay(time)
@@ -118,6 +118,14 @@ const findAllByStudent = async (student) => {
               WHERE Users.id = Tutor.user_id
             )`),
             'teacherName',
+          ],
+          [
+            sequelize.literal(`(
+              SELECT Users.avatar
+              FROM Users
+              WHERE Users.id = Tutor.user_id
+            )`),
+            'teacherAvatar',
           ]
         ]
       },
@@ -171,17 +179,16 @@ const attend = async (course) => {
     student.totalMinutes += duration
     const year = course.startTime.getFullYear()
     const week = getWeek(course.startTime)
-    const weekRecord = await Record.findOrCreate({
-      where: {
-        UserId: student.id,
-        year,
-        week,
-      },
-      defaults: {
-        UserId: student.id,
-        year,
-        week,
-      }
+    const condition = {
+      UserId: student.id,
+      year,
+      week,
+    }
+    // eslint-disable-next-line no-unused-vars
+    const [weekRecord, _] = await Record.findOrCreate({
+      where: condition,
+      defaults: condition,
+      transaction: t
     })
     weekRecord.learnedMinutes += duration
     course.status = COURSE_COMPLETE
