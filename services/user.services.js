@@ -1,6 +1,7 @@
 const db = require('../models')
 const { User, Record, Course, Tutor, sequelize, Sequelize } = db
 const { Op } = Sequelize
+const PaginationService = require('./pagination.service')
 const getWeek = require('date-fns/getWeek')
 
 const changeRole = (user, { role }) => {
@@ -24,6 +25,43 @@ const rankStudents = (limit = 10) => {
     order: [['totalMinutes', 'DESC']],
     limit
   })
+}
+
+const index = ({ page = 1, limit = 6, search }) => {
+  const paginationService = new PaginationService(User)
+  const condition = {
+    attributes: [
+      'id',
+      'name',
+      'avatar',
+      'country',
+      'description',
+      'score',
+      'isTeacher',
+    ],
+    where: {
+      isAdmin: false
+    },
+    raw: true,
+  }
+  if (search) {
+    condition['where'] = {
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: `%${search}%`
+          }
+        },
+        {
+          description: {
+            [Op.like]: `%${search}%`
+          }
+        }
+      ]
+    }
+  }
+  const order = [['isTeacher', 'DESC'], ['score', 'DESC'], ['totalMinutes', 'DESC']]
+  return paginationService.getPaginatedData({ page, limit, order, condition })
 }
 
 const rankStudentsByWeek = (limit = 10) => {
@@ -148,6 +186,7 @@ const getRankByWeek = async (id) => {
 }
 
 module.exports = {
+  index,
   changeRole,
   rankStudents,
   rankStudentsByWeek,

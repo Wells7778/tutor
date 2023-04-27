@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="row row-cols-1 g-2">
+    <div class="col-12">
+      <div id="search mb-2">
+        <input type="text" class="form-control" id="search-input" placeholder="Type" value="{{search}}">
+      </div>
+    </div>
+    {{#each users}}
+    <div class="col">
+      <div class="card mb-1">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-2">
+              <img src="{{this.avatar}}" class="circle-img" alt="...">
+            </div>
+            <div class="col-10">
+              <h5 class="card-title">
+                {{#if this.isTeacher}}
+                <span class="badge bg-primary me-2">老師</span>
+                {{else}}
+                  <span class="badge bg-primary me-2">學生</span>
+                {{/if}}
+              </h5>
+              <h5 class="card-title">{{this.name}}</h5>
+              <p class="card-text text-truncate-4">{{this.description}}</p>
+              <p class="card-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt text-info"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                  <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                </svg>
+                {{this.country}}
+              </p>
+              <p class="card-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                  class="bi bi-heart-fill text-danger" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                </svg>
+                {{this.score}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+    <div class="col-12">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item {{#ifNull pagination.prevPage }}disabled{{/ifNull}}">
+            <a class="page-link"
+              href="?{{#if pagination.prevPage}}page={{pagination.prevPage}}{{/if}}{{#if search}}&search={{search}}{{/if}}"
+              aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {{#each pagination.pageNumbers}}
+          <li class="page-item {{#ifEqual this ../page }}active{{/ifEqual}}"><a class="page-link"
+              href="?page={{this}}{{#if search}}&search={{search}}{{/if}}">{{this}}</a>
+          </li>
+          {{/each}}
+          <li class="page-item {{#ifNull pagination.nextPage }}disabled{{/ifNull}}">
+            <a class="page-link"
+              href="?{{#if pagination.nextPage}}page={{pagination.nextPage}}{{/if}}{{#if search}}&search={{search}}{{/if}}"
+              aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<script src="/javascript/search.js"></script>

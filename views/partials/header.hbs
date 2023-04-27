@@ -19,6 +19,11 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/profile">{{user.name}}</a>
           </li>
+          {{#if user.isAdmin}}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/apple">後台</a>
+          </li>
+          {{/if}}
           {{#unless user.isTeacher}}
           <li class="nav-item">
             <a class="nav-link" href="/tutors/new">成為老師</a>
