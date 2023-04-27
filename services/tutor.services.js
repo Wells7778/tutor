@@ -1,5 +1,6 @@
 const db = require('../models')
-const { Tutor, User, Course } = db
+const { Tutor, User, Course, Sequelize } = db
+const { Op, literal } = Sequelize
 const PaginationService = require('./pagination.service')
 
 
@@ -28,17 +29,23 @@ const index = ({ page = 1, limit = 6, search }) => {
   if (search) {
     // search by user name and tutor introduction
     condition['where'] = {
-      '$User.name$': {
-        [db.Sequelize.Op.like]: `%${search}%`
-      },
-      '$introduction$': {
-        [db.Sequelize.Op.like]: `%${search}%`
-      }
+      [Op.or]: [
+        {
+          '$User.name$': {
+            [Op.like]: `%${search}%`
+          }
+        },
+        {
+          introduction: {
+            [Op.like]: `%${search}%`
+          }
+        }
+      ]
     }
   }
   // order by user score
   const order = [
-    [db.Sequelize.literal('User.score'), 'DESC']
+    [literal('User.score'), 'DESC']
   ]
   return paginationService.getPaginatedData({ page, limit, order, condition })
 }
