@@ -70,7 +70,7 @@
               <h5 class="card-title fw-bold">Lesson History</h5>
               <div class="row row-cols-2 g-1">
                 {{#each extra.completeCourses}}
-                <div class="col">
+                <div class="col" id="course-{{this.id}}">
                   <div class="card">
                     <div class="card-body">
                       <div class="row">
@@ -109,7 +109,7 @@
         <form action="" method="POST">
           <div class="mb-3">
             <label for="score" class="form-label">Score</label>
-            <input type="number" class="form-control" id="score" name="score" min="0" max="5">
+            <input type="number" class="form-control" id="score" name="score" min="0" max="5" step="0.5">
           </div>
           <div class="mb-3">
             <label for="comment" class="form-label">Comment</label>
@@ -128,32 +128,43 @@
 <script>
   const scoreModel = document.querySelector('#scoreModal')
   const submit = scoreModel.querySelector('.modal-footer button[type=submit]')
-  submit.addEventListener('click', (event) => {
+  submit.addEventListener('click', async (event) => {
     event.preventDefault()
     const form = scoreModel.querySelector('form')
-    const formData = new FormData(form)
     const url = form.getAttribute('action')
-    fetch(url, {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.json())
-      .then(result => {
-        if (result.ok) {
-          alert('打分數成功！')
-          scoreModel.querySelector('.btn-close').click()
-        } else {
-          alert(result.message)
-        }
+    try {
+      const params = {
+        score: +form.elements.score.value,
+        comment: form.elements.comment.value,
+      }
+      const { status, data: { id, message } } = await axios({url, method: 'PATCH', data: params})
+      if (status === 200) {
+        Swal.fire({ title: '完成評分', icon: 'success', confirmButtonText: 'OK' })
+        scoreModel.querySelector('.btn-close').click()
+        document.querySelector(`#course-${id}`).remove()
+      } else {
+        Swal.fire({
+          title: '評分失敗!',
+          text: message,
+          icon: 'error',
+          confirmButtonText: 'Close'
+        })
+      }
+    } catch (error) {
+      Swal.fire({
+        title: '評分失敗!',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'Close'
       })
+    }
   })
   const setModelData = (event) => {
     const btn = event.relatedTarget
     const id = btn.getAttribute('data-bs-course-id')
     const teacherName = btn.parentElement.querySelector('p').textContent
     scoreModel.querySelector('.modal-title').textContent = `幫 ${teacherName} 打分數吧！`
-    // set form action
-    scoreModel.querySelector('form').setAttribute('action', `/api/courses/${id}/score`)
+    scoreModel.querySelector('form').setAttribute('action', `/courses/${id}/score?_method=PATCH`)
   }
   const clearModelData = () => {
     scoreModel.querySelector('.modal-title').textContent = ''

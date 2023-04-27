@@ -7,5 +7,5 @@ const schemas = require('../validations/courses.validation.js')
 
 router.post('/tutors/:tutorId/courses', authenticatedStudent, bodyValidation(schemas.create), coursesController.create)
 router.patch('/tutors/:tutorId/courses/:id', authenticatedTeacher, coursesController.attend)
-router.patch('courses/:id', authenticatedTeacher, coursesController.complete)
+router.patch('/courses/:id/score', authenticatedStudent, bodyValidation(schemas.score), coursesController.score)
 module.exports = router

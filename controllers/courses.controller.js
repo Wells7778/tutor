@@ -35,12 +35,14 @@ const coursesController = {
       next(error)
     }
   },
-  async complete(req, res, next) {
+  async score(req, res, next) {
     try {
       const course = await service.findById(req.params.id)
-      if (course.UserId !== helpers.getUser(req).id) throw new Error('不是自己的課程')
+      if (course.UserId !== helpers.getUser(req).id) {
+        res.json({ message: '不是自己的課程' })
+      }
       await service.complete(course, req.validBody)
-      res.redirect('/profile')
+      res.json({ id: course.id })
     } catch (error) {
       next(error)
     }
