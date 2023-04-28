@@ -1,6 +1,6 @@
 <header>
-  <div class="navbar navbar-dark navbar-expand-lg bg-dark shadow-sm">
-    <div class="container">
+  <nav class="navbar navbar-dark navbar-expand-lg bg-dark shadow-sm sticky-top">
+    <div class="container-fluid">
       <a href="/" class="navbar-brand">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book-half"
           viewBox="0 0 16 16">
@@ -14,7 +14,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto">
           {{#if user}}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/profile">{{user.name}}</a>
@@ -37,7 +37,12 @@
           <li class="nav-item"><a class="nav-link" href="/signin">Sign In</a></li>
           {{/if}}
         </ul>
+        {{#if user}}
+        <div class="">
+          <a class="nav-link text-white fw-bold fs-5" href="/chat">QA聊天室</a>
+        </div>
+        {{/if}}
       </div>
     </div>
-  </div>
+  </nav>
 </header>
