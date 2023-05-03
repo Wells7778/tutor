@@ -21,17 +21,31 @@ const SERVICE_MAP = {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Users',
-      Array.from({ length: 12 }).map(() => ({
-        name: randFirstName({ gender: 'female' }),
-        email: randEmail({ suffix: 'com' }),
-        password: bcrypt.hashSync('12345678', 10),
-        avatar: `https://loremflickr.com/400/400/girl?lock=${randNumber({ min: 1, max: 30000 })}`,
-        description: randParagraph(),
-        country: randCountry(),
-        is_teacher: true,
-        created_at: new Date(),
-        updated_at: new Date(),
-      }))
+      [
+        ...Array.from({ length: 12 }).map(() => ({
+          name: randFirstName({ gender: 'female' }),
+          email: randEmail({ suffix: 'com' }),
+          password: bcrypt.hashSync('12345678', 10),
+          avatar: `https://loremflickr.com/400/400/girl?lock=${randNumber({ min: 1, max: 30000 })}`,
+          description: randParagraph(),
+          country: randCountry(),
+          is_teacher: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+        })),
+        {
+          name: 'Admin',
+          email: 'root@email',
+          password: '12345678',
+          avatar: `https://loremflickr.com/400/400/girl?lock=${randNumber({ min: 1, max: 30000 })}`,
+          description: randParagraph(),
+          country: randCountry(),
+          is_teacher: false,
+          is_admin: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+      ]
     )
     await queryInterface.bulkInsert('Tutors',
       Array.from({ length: 12 }).map((_, i) => ({

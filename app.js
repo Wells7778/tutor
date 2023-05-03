@@ -16,6 +16,8 @@ const handlebarsHelpers = require('./helpers/handlebars.helpers')
 const app = express()
 const port = Number(process.env.PORT) || 3000
 const SESSION_SECRET = process.env.SECRET || 'secret'
+const RedisStore = require('connect-redis').default
+const { createClient } = require('redis')
 
 // view engine setup
 app.engine('hbs', engine({ extname: '.hbs', helpers: handlebarsHelpers }))
@@ -26,7 +28,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static('public'))
+
+const redisClient = createClient()
+redisClient.connect().catch(console.error)
+const redisStore = new RedisStore({ client: redisClient })
 app.use(session({
+  store: redisStore,
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
