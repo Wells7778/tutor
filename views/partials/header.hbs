@@ -16,25 +16,25 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           {{#if user}}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/profile">{{user.name}}</a>
-          </li>
-          {{#if user.isAdmin}}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/apple">後台</a>
-          </li>
-          {{/if}}
-          {{#unless user.isTeacher}}
-          <li class="nav-item">
-            <a class="nav-link" href="/tutors/new">成為老師</a>
-          </li>
-          {{/unless}}
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Log Out</a>
-          </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/profile">{{user.name}}</a>
+            </li>
+            {{#if user.isAdmin}}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/apple">後台</a>
+            </li>
+            {{/if}}
+            {{#unless user.isTeacher}}
+            <li class="nav-item">
+              <a class="nav-link" href="/tutors/new">成為老師</a>
+            </li>
+            {{/unless}}
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Log Out</a>
+            </li>
           {{else}}
-          <li class="nav-item"><a class="nav-link" href="/signup">Sign Up</a></li>
-          <li class="nav-item"><a class="nav-link" href="/signin">Sign In</a></li>
+            <li class="nav-item"><a class="nav-link" href="/signup">Sign Up</a></li>
+            <li class="nav-item"><a class="nav-link" href="/signin">Sign In</a></li>
           {{/if}}
         </ul>
         {{#if user}}

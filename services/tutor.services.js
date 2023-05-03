@@ -1,7 +1,7 @@
 const db = require('../models')
 const { Tutor, User, Course, Sequelize } = db
 const { Op, literal } = Sequelize
-const PaginationService = require('./pagination.service')
+const PaginationService = require('./pagination.services')
 
 
 const index = ({ page = 1, limit = 6, search }) => {

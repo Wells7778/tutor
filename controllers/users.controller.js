@@ -37,10 +37,10 @@ const usersController = {
   },
   signUp: async (req, res, next) => {
     try {
-      const { email, name, password, passwordCheck, userType: type } = req.body
+      const { email, name, password, passwordCheck } = req.body
       if (password !== passwordCheck) throw new Error('密碼與確認密碼不相同')
 
-      const userCount = await User.count({ where: { email, type } })
+      const userCount = await User.count({ where: { email } })
       if (userCount) throw new Error('帳號已存在')
 
       await User.create({

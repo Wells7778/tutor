@@ -16,18 +16,9 @@
         <input type="password" id="passwordCheck" name="passwordCheck" class="form-control" required>
         <label for="passwordCheck">Confirm Password</label>
       </div>
-      <div class="form-row mb-3">
-        <select class="form-select" id="country-select" aria-label="請選擇國家" name="country">
-          <option value="" selected>請選擇國家</option>
-          {{#each countryOptions}}
-          <option value="{{this}}">{{this}}</option>
-          {{/each}}
-        </select>
-      </div>
       <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
     </form>
     <div class="my-4 text-center">
-      <p>Or</p>
       <p><a href="{{googleAuthUrl}}" id="sign-up-google">Sign Up with Google</a></p>
     </div>
   </div>

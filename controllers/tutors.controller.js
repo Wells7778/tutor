@@ -2,6 +2,7 @@ const service = require('../services/tutor.services')
 const userService = require('../services/user.services')
 const courseService = require('../services/course.services')
 const helpers = require('../helpers/auth.helper')
+const startOfTomorrow = require('date-fns/startOfTomorrow')
 const tutorsController = {
   async indexPage(req, res, next) {
     try {
@@ -49,7 +50,7 @@ const tutorsController = {
   async showPage(req, res, next) {
     try {
       const tutor = await service.findById(req.params.id)
-      const courseOptions = courseService.getAvailTimes(tutor)
+      const courseOptions = courseService.getAvailTimes(tutor, { startTime: startOfTomorrow()})
       const courses = tutor.Courses.sort((a, b) => a.score - b.score)
       const filterCourses = [...courses.slice(0, 2), ...courses.slice(-2)].map(c => c.toJSON())
       return res.render('tutor', { tutor: tutor.toJSON(), courseOptions, filterCourses })

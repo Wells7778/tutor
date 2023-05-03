@@ -1,7 +1,7 @@
 const db = require('../models')
 const { User, Record, Course, Tutor, sequelize, Sequelize } = db
 const { Op } = Sequelize
-const PaginationService = require('./pagination.service')
+const PaginationService = require('./pagination.services')
 const getWeek = require('date-fns/getWeek')
 
 const changeRole = (user, { role }) => {

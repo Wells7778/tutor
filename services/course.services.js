@@ -8,6 +8,7 @@ const getDay = require('date-fns/getDay')
 const getWeek = require('date-fns/getWeek')
 const isAfter = require('date-fns/isAfter')
 const { COURSE_SUBMIT, COURSE_COMPLETE } = require('../constants/course.status')
+const { AVAILABILITY_HOUR } = require('../constants/course.availability')
 const { Course, User, Tutor, Record, sequelize } = db
 const { Op } = require('sequelize')
 
@@ -43,6 +44,7 @@ const getAvailTimes = (tutor, { startTime = startOfTomorrow() }) => {
   const end = addWeeks(start, 2)
   const availTimes = eachMinuteOfInterval({ start, end }, { step })
   return availTimes.filter((time) => {
+    if (!AVAILABILITY_HOUR.includes(time.getHours())) return false
     const weekday = getDay(time)
     const isExist = existLessons.some(lesson => isEqual(lesson, time))
     if (isExist) return false
