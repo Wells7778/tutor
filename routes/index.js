@@ -1,4 +1,5 @@
-const pageRouter = require('./page.js')
+const helpers = require('../helpers/auth.helper')
+const userRouter = require('./users.js')
 const tutorRouter = require('./tutors.js')
 const courseRouter = require('./courses.js')
 const authRouter = require('./auth.js')
@@ -8,11 +9,17 @@ const errorRouter = require('./error.js')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth.js')
 
 module.exports = (app, passport) => {
+  app.use((req, res, next) => {
+    res.locals.success_messages = req.flash('success_messages')
+    res.locals.error_messages = req.flash('error_messages')
+    res.locals.user = helpers.getUser(req)?.toJSON()
+    next()
+  })
   authRouter(app, passport)
-  app.use('/chat', authenticated, chatRouter)
   app.use('/apple', authenticatedAdmin, adminRouter)
+  app.use('/chat', authenticated, chatRouter)
   app.use('/tutors', tutorRouter)
+  app.use(authenticated, userRouter)
   app.use(courseRouter)
-  app.use(authenticated, pageRouter)
   app.use(errorRouter)
 }

@@ -177,7 +177,7 @@ const getRankByWeek = async (id) => {
   const rank = await Record.count({
     where: {
       learnedMinutes: {
-        [Op.gt]: userMinutes.learnedMinutes
+        [Op.gt]: userMinutes?.learnedMinutes || 0
       }
     }
   })

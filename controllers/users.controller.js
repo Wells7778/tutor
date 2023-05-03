@@ -120,6 +120,23 @@ const usersController = {
     } catch (error) {
       next(error)
     }
+  },
+  editProfilePage: (req, res, next) => {
+    res.render('editProfile')
+  },
+  update: async (req, res, next) => {
+    try {
+      const { name, description } = req.validBody
+      const user = helpers.getUser(req)
+      await User.update({
+        name,
+        description,
+      }, { where: { id: user.id } })
+      req.flash('success_messages', '成功更新個人資料！')
+      res.redirect('/profile')
+    } catch (error) {
+      next(error)
+    }
   }
 }
 

@@ -17,7 +17,13 @@
         <ul class="navbar-nav me-auto">
           {{#if user}}
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/profile">{{user.name}}</a>
+              <a class="nav-link active" aria-current="page" href="/profile">
+              {{#if user.name}}
+              {{user.name}}
+              {{else}}
+              {{user.email}}
+              {{/if}}
+              </a>
             </li>
             {{#if user.isAdmin}}
             <li class="nav-item">

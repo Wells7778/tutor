@@ -12,7 +12,6 @@ const logger = require('morgan')
 const flash = require('connect-flash')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
-const helpers = require('./helpers/auth.helper')
 const handlebarsHelpers = require('./helpers/handlebars.helpers')
 const app = express()
 const port = Number(process.env.PORT) || 3000
@@ -36,13 +35,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
-
-app.use((req, res, next) => {
-  res.locals.success_messages = req.flash('success_messages')
-  res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = helpers.getUser(req)?.toJSON()
-  next()
-})
 
 require('./routes')(app, passport)
 

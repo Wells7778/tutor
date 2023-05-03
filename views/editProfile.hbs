@@ -1,0 +1,19 @@
+<div class="row justify-content-center">
+  <div class="col col-8 border border-5 pt-5">
+    <div class="mb-4 text-center">
+      <h1 class="h3 font-weight-normal mb-3">自我介紹</h1>
+    </div>
+    <form class="py-3" action="/profile?_method=PATCH" method="POST">
+      <div class="form-floating mb-2">
+        <input class="form-control" id="name" name="name" value="{{user.name}}">
+        <label for="name">怎麼稱呼你</label>
+      </div>
+      <div class="form-floating mb-2">
+        <textarea class="form-control" id="description" name="description"
+          style="height: 300px;">{{user.description}}</textarea>
+        <label for="description">寫一小段描述你自己</label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">送出</button>
+    </form>
+  </div>
+</div>

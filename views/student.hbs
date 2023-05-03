@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col align-items-center">
             <div class="card border border-0">
-              <img src="{{user.avatar}}" class="card-img-top" alt="...">
+              {{>image user=user}}
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">
@@ -30,6 +30,7 @@
                 <p class="card-text fs-5 fw-bold my-3">About Me</p>
                 <p class="card-text my-3">{{user.description}}</p>
               </div>
+              <a class="btn btn-secondary" href="/profile/edit">編輯我的資料</a>
             </div>
           </div>
         </div>

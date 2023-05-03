@@ -1,0 +1,9 @@
+{{!-- <button type="button" class="" data-bs-toggle="modal" data-bs-target="#avatarUpload">
+<img src="{{#if user.avatar}}{{user.avatar}}{{else}}http://fakeimg.pl/400x400/{{/if}}" class="card-img-top" alt="...">
+</button>
+{{>avatarUploadForm}} --}}
+<div class="position-relative">
+  <img src="{{#if user.avatar}}{{user.avatar}}{{else}}http://fakeimg.pl/400x400/{{/if}}" class="card-img-top" alt="..." id="profile-avatar">
+  <input type="file" class="form-control-file fileInput" onchange="upload('#avatar', '#profile-avatar');" id="avatar" name="avatar">
+</div>
+<script src="/javascript/avatar.js"></script>
