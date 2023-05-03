@@ -29,7 +29,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static('public'))
 
-const redisClient = createClient()
+const redisClient = createClient({
+  host: process.env.REDIS_URL,
+  port: 6379,
+})
 redisClient.connect().catch(console.error)
 const redisStore = new RedisStore({ client: redisClient })
 app.use(session({
