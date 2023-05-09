@@ -5,9 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      models.User.hasOne(models.Tutor)
-      models.User.hasMany(models.Course)
-      models.User.hasMany(models.Record)
+      User.hasOne(models.Tutor)
+      User.hasMany(models.Course)
+      User.hasMany(models.Record)
     }
   }
   User.init({

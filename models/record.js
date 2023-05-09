@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Record extends Model {
     static associate(models) {
-      models.Record.belongsTo(models.User)
+      Record.belongsTo(models.User)
     }
   }
   Record.init({
