@@ -7,10 +7,10 @@ const coursesController = {
     try {
       const user = helpers.getUser(req)
       const tutor = await tutorService.findById(req.params.tutorId)
-      const course = await service.create(user, tutor, req.validBody)
       if (!tutor) {
         return res.status(404).json('tutor not found')
       }
+      const course = await service.create(user, tutor, req.validBody)
       if (!course) {
         return res.status(400).json('Create course fail')
       }
